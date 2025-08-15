@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.ahmed</groupId>
+  <artifactId>bank-management-system</artifactId>
+  <version>1.0.0</version>
+  <name>Bank Management System</name>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <javafx.version>21.0.3</javafx.version>
+    <javafx.platform>${os.detected.javafx}</javafx.platform>
+    <main.class>Main</main.class>
+  </properties>
+
+  <dependencies>
+    <!-- JavaFX -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
+    </dependency>
+
+    <!-- MySQL JDBC -->
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>8.4.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Detect OS to pick the right JavaFX artifacts -->
+      <plugin>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>1.7.1</version>
+        <executions><execution><goals><goal>detect</goal></goals></execution></executions>
+      </plugin>
+
+      <!-- Run JavaFX: mvn javafx:run -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>${main.class}</mainClass>
+        </configuration>
+      </plugin>
+
+      <!-- Also produce a runnable jar (optional) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>${main.class}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- JavaFX needs platform-specific classifier -->
+  <profiles>
+    <profile>
+      <id>windows</id>
+      <activation><os><family>Windows</family></os></activation>
+      <properties><os.detected.javafx>win</os.detected.javafx></properties>
+    </profile>
+    <profile>
+      <id>mac</id>
+      <activation><os><family>Mac</family></os></activation>
+      <properties><os.detected.javafx>mac</os.detected.javafx></properties>
+    </profile>
+    <profile>
+      <id>linux</id>
+      <activation><os><family>unix</family></os></activation>
+      <properties><os.detected.javafx>linux</os.detected.javafx></properties>
+    </profile>
+  </profiles>
+</project>
