@@ -1,3 +1,4 @@
+// application/DataConnection.java
 package application;
 
 import java.sql.Connection;
@@ -10,24 +11,28 @@ public class DataConnection {
         try {
             // Load MySQL driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            // Database URL, username, password
-            String url = "jdbc:mysql://127.0.0.1:3306/bankmanagment"; // Replace with your database name
-            String user = "root";
-            String password = ""; // Add your password if any
-            
-            // Establish connection
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the MySQL database!");
 
+            // Prefer environment variables (for Gitpod/containers), fallback to local defaults
+            String host = System.getenv().getOrDefault("DB_HOST", "127.0.0.1");
+            String port = System.getenv().getOrDefault("DB_PORT", "3306");
+            String dbName = System.getenv().getOrDefault("DB_NAME", "bankmanagement");
+            String user = System.getenv().getOrDefault("DB_USER", "root");
+            String password = System.getenv().getOrDefault("DB_PASS", "");
+
+            String url = String.format(
+                "jdbc:mysql://%s:%s/%s?useSSL=false&allowPublicKeyRetrieval=true",
+                host, port, dbName
+            );
+
+            connection = DriverManager.getConnection(url, user, password);
+            System.out.println("✅ Connected to MySQL: " + url);
         } catch (ClassNotFoundException e) {
-            System.out.println("MySQL JDBC Driver not found.");
+            System.err.println("❌ MySQL JDBC Driver not found.");
             e.printStackTrace();
         } catch (SQLException e) {
-            System.out.println("Error connecting to MySQL");
+            System.err.println("❌ Error connecting to MySQL");
             e.printStackTrace();
         }
         return connection;
     }
 }
-

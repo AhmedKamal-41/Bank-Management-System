@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS transactions (
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- optional: simple signup table (if you reference it)
+-- Optional: signup table (use only if referenced by code)
 CREATE TABLE IF NOT EXISTS signup (
   email VARCHAR(255) PRIMARY KEY,
   password VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- seed demo user
+-- Seed demo user
 INSERT INTO users (email, password, first_name, last_name, balance)
 VALUES ('demo@bank.com', 'password123', 'Demo', 'User', 1000.00)
 ON DUPLICATE KEY UPDATE email=email;
