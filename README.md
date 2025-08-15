@@ -15,6 +15,10 @@
 
 <em>Built with the tools and technologies:</em>
 
+<img src="https://img.shields.io/badge/Java-007396.svg?style=flat&logo=java&logoColor=white" alt="Java">
+<img src="https://img.shields.io/badge/SQL-003B57.svg?style=flat&logo=postgresql&logoColor=white" alt="SQL">
+<img src="https://img.shields.io/badge/NoSQL-47A248.svg?style=flat&logo=mongodb&logoColor=white" alt="NoSQL">
+
 
 </div>
 <br>
